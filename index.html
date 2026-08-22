@@ -1,863 +1,1121 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>La Tribu Sin Tabú | Educación, derechos y futuro</title>
+
     <meta name="description"
-        content="Plataforma regional liderada por adolescentes y jóvenes para la prevención del embarazo adolescente, educación sexual integral, salud mental y prevención de violencias.">
+        content="La Tribu Sin Tabú: una plataforma juvenil para hablar de educación sexual integral, proyecto de vida, salud mental, prevención de violencia y derechos.">
 
-    <title>DECIDE+ | Juventudes por la Prevención</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
     <link rel="stylesheet" href="style.css">
 </head>
-<script src="script.js"></script>
+
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
+<!-- ================= PRELOADER ================= -->
 
-    <header class="header">
+<div id="preloader">
+    <div class="loader-logo">
+        <span>LA TRIBU</span>
+        <strong>SIN TABÚ</strong>
+    </div>
 
-        <nav class="navbar">
+    <div class="loader-bar">
+        <span></span>
+    </div>
+</div>
 
-            <a href="#inicio" class="logo">
-                <span class="logo-icon">✦</span>
-                <span>DECIDE<span class="logo-plus">+</span></span>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header" id="header">
+
+    <div class="nav-container">
+
+        <a href="#inicio" class="logo">
+            <span class="logo-symbol">✦</span>
+
+            <div>
+                <span class="logo-main">LA TRIBU</span>
+                <span class="logo-sub">SIN TABÚ</span>
+            </div>
+        </a>
+
+        <nav class="nav-menu">
+
+            <a href="#nosotros">Nosotros</a>
+            <a href="#pilares">Pilares</a>
+            <a href="#mitos">Sin tabú</a>
+            <a href="#test">Test</a>
+            <a href="#futuro">Tu futuro</a>
+
+            <a href="#recursos" class="nav-highlight">
+                Recursos
             </a>
-
-            <ul class="nav-links">
-
-                <li>
-                    <a href="#inicio">Inicio</a>
-                </li>
-
-                <li>
-                    <a href="#nosotros">La campaña</a>
-                </li>
-
-                <li>
-                    <a href="#tematicas">Temáticas</a>
-                </li>
-
-                <li>
-                    <a href="#recursos">Recursos</a>
-                </li>
-
-                <li>
-                    <a href="#faq">Preguntas</a>
-                </li>
-
-                <li>
-                    <a href="#contacto" class="nav-button">
-                        Participa
-                    </a>
-                </li>
-
-            </ul>
-
-            <button class="menu-toggle" id="menuToggle">
-                ☰
-            </button>
 
         </nav>
 
-    </header>
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+</header>
 
 
-    <main>
+<!-- ================= HERO ================= -->
 
-        <!-- =========================
-             HERO
-        ========================== -->
+<main>
 
-        <section class="hero" id="inicio">
+<section class="hero" id="inicio">
 
-            <div class="hero-container">
+    <div class="hero-background"></div>
 
-                <div class="hero-content">
+    <div class="floating-shape shape-one"></div>
+    <div class="floating-shape shape-two"></div>
+    <div class="floating-shape shape-three"></div>
 
-                    <span class="eyebrow">
-                        UNA CAMPAÑA LIDERADA POR JUVENTUDES
-                    </span>
+    <div class="hero-container">
 
-                    <h1>
-                        Tu futuro.
-                        <br>
+        <div class="hero-content">
 
-                        <span class="gradient-text">
-                            Tus decisiones.
-                        </span>
-                    </h1>
-
-                    <p class="hero-description">
-
-                        Una plataforma regional para informarte,
-                        cuestionar, conversar y tomar decisiones
-                        conscientes sobre tu salud sexual y
-                        reproductiva.
-
-                    </p>
-
-                    <div class="hero-buttons">
-
-                        <a href="#tematicas"
-                           class="btn btn-primary">
-
-                            Explorar contenidos →
-
-                        </a>
-
-                        <a href="#nosotros"
-                           class="btn btn-secondary">
-
-                            Conoce la campaña
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-                <div class="hero-visual">
-
-                    <div class="floating-card card-one">
-                        💡 Infórmate
-                    </div>
-
-                    <div class="main-card">
-
-                        <div class="main-card-icon">
-                            🧠
-                        </div>
-
-                        <h3>
-                            Decidir también es cuidarte.
-                        </h3>
-
-                        <p>
-                            Con información confiable,
-                            herramientas y espacios seguros,
-                            las juventudes pueden construir
-                            decisiones autónomas y responsables.
-                        </p>
-
-                    </div>
-
-                    <div class="floating-card card-two">
-                        🌱 Construye tu proyecto de vida
-                    </div>
-
-                    <div class="floating-card card-three">
-                        💜 Tu voz importa
-                    </div>
-
-                </div>
-
+            <div class="eyebrow reveal">
+                <span></span>
+                HABLEMOS SIN MIEDO
             </div>
 
-        </section>
-
-
-        <!-- =========================
-             STATS
-        ========================== -->
-
-        <section class="stats">
-
-            <div class="stats-container">
-
-                <div class="stat">
-                    <h3>01</h3>
-                    <p>Información clara y confiable</p>
-                </div>
-
-                <div class="stat">
-                    <h3>02</h3>
-                    <p>Participación juvenil</p>
-                </div>
-
-                <div class="stat">
-                    <h3>03</h3>
-                    <p>Decisiones autónomas</p>
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             SOBRE LA CAMPAÑA
-        ========================== -->
-
-        <section class="about" id="nosotros">
-
-            <div class="container">
-
-                <div class="about-grid">
-
-                    <div class="about-text">
-
-                        <div class="section-label">
-                            SOBRE LA CAMPAÑA
-                        </div>
-
-                        <h2>
-                            Información que abre
-                            posibilidades.
-                        </h2>
-
-                        <p>
-                            Esta iniciativa busca fortalecer la
-                            prevención del embarazo adolescente
-                            a nivel regional mediante una campaña
-                            construida con la participación activa
-                            de adolescentes y jóvenes.
-                        </p>
-
-                        <p>
-                            Queremos generar conciencia, facilitar
-                            el acceso a información sobre salud
-                            sexual y reproductiva y promover
-                            decisiones informadas, autónomas y
-                            responsables.
-                        </p>
-
-                        <div class="highlight">
-
-                            Porque prevenir no significa limitar
-                            tu futuro. Significa tener las
-                            herramientas para decidir sobre él.
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="about-box">
-
-                        <h3>
-                            ¿Por qué hablar de esto?
-                        </h3>
-
-                        <p>
-                            Las juventudes viven realidades
-                            diferentes. Por eso, la prevención
-                            necesita reconocer los contextos
-                            sociales, culturales, familiares y
-                            personales de cada adolescente.
-                        </p>
-
-                        <p>
-                            Esta plataforma busca acercar
-                            información y recursos que permitan
-                            identificar oportunidades, reconocer
-                            derechos y fortalecer capacidades
-                            para tomar decisiones.
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             TEMÁTICAS
-        ========================== -->
-
-        <section class="themes" id="tematicas">
-
-            <div class="container">
-
-                <div class="section-header">
-
-                    <div class="section-label">
-                        EXPLORA
-                    </div>
-
-                    <h2>
-                        Tres caminos para
-                        tomar mejores decisiones.
-                    </h2>
-
-                    <p>
-                        Conoce los principales temas de la
-                        campaña y encuentra herramientas para
-                        informarte, reflexionar y actuar.
-                    </p>
-
-                </div>
-
-
-                <div class="theme-grid">
-
-                    <article class="theme-card">
-
-                        <span class="theme-number">
-                            01
-                        </span>
-
-                        <div class="theme-icon">
-                            📚
-                        </div>
-
-                        <h3>
-                            Educación Sexual Integral
-                            y Proyecto de Vida
-                        </h3>
-
-                        <p>
-                            Conoce tus derechos, comprende
-                            tu salud sexual y reproductiva
-                            y descubre cómo construir un
-                            proyecto de vida alineado con
-                            tus metas.
-                        </p>
-
-                        <a href="#recursos" class="theme-link">
-                            Explorar →
-                        </a>
-
-                    </article>
-
-
-                    <article class="theme-card">
-
-                        <span class="theme-number">
-                            02
-                        </span>
-
-                        <div class="theme-icon">
-                            🛡️
-                        </div>
-
-                        <h3>
-                            Prevención de Violencias
-                            de Género y Embarazo Infantil
-                        </h3>
-
-                        <p>
-                            Aprende a reconocer señales de
-                            violencia, fortalecer relaciones
-                            basadas en el respeto y conocer
-                            herramientas de prevención.
-                        </p>
-
-                        <a href="#recursos" class="theme-link">
-                            Explorar →
-                        </a>
-
-                    </article>
-
-
-                    <article class="theme-card">
-
-                        <span class="theme-number">
-                            03
-                        </span>
-
-                        <div class="theme-icon">
-                            💜
-                        </div>
-
-                        <h3>
-                            Salud Mental
-                            en la Adolescencia
-                        </h3>
-
-                        <p>
-                            Comprende la relación entre
-                            bienestar emocional, autoestima,
-                            relaciones y toma de decisiones.
-                        </p>
-
-                        <a href="#recursos" class="theme-link">
-                            Explorar →
-                        </a>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             RECURSOS
-        ========================== -->
-
-        <section class="resources" id="recursos">
-
-            <div class="container">
-
-                <div class="section-header">
-
-                    <div class="section-label">
-                        RECURSOS
-                    </div>
-
-                    <h2>
-                        Aprende. Cuestiona.
-                        Comparte.
-                    </h2>
-
-                    <p>
-                        Recursos diseñados para que la
-                        información sea fácil de comprender,
-                        compartir y utilizar.
-                    </p>
-
-                </div>
-
-
-                <div class="resource-grid">
-
-                    <article class="resource">
-
-                        <div class="resource-image">
-                            🧭
-                        </div>
-
-                        <div class="resource-content">
-
-                            <span>
-                                Proyecto de vida
-                            </span>
-
-                            <h3>
-                                ¿Hacia dónde quieres ir?
-                            </h3>
-
-                            <p>
-                                Una herramienta para reflexionar
-                                sobre tus metas, decisiones,
-                                oportunidades y futuro.
-                            </p>
-
-                            <a href="#" class="read-more">
-                                Ver recurso →
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="resource">
-
-                        <div class="resource-image">
-                            💬
-                        </div>
-
-                        <div class="resource-content">
-
-                            <span>
-                                Educación sexual
-                            </span>
-
-                            <h3>
-                                Hablemos sin tabúes
-                            </h3>
-
-                            <p>
-                                Información clara sobre salud
-                                sexual y reproductiva para
-                                tomar decisiones informadas.
-                            </p>
-
-                            <a href="#" class="read-more">
-                                Ver recurso →
-                            </a>
-
-                        </div>
-
-                    </article>
-
-
-                    <article class="resource">
-
-                        <div class="resource-image">
-                            🧠
-                        </div>
-
-                        <div class="resource-content">
-
-                            <span>
-                                Salud mental
-                            </span>
-
-                            <h3>
-                                Cuidar también es decidir
-                            </h3>
-
-                            <p>
-                                Recursos para comprender tus
-                                emociones y fortalecer tu
-                                bienestar.
-                            </p>
-
-                            <a href="#" class="read-more">
-                                Ver recurso →
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             CTA
-        ========================== -->
-
-        <section class="cta">
-
-            <div class="cta-box">
-
-                <h2>
-                    Tu voz puede cambiar
-                    la conversación.
-                </h2>
-
-                <p>
-                    Esta campaña no se construye solamente
-                    para las juventudes. Se construye
-                    con ellas.
-                </p>
-
-                <a href="#contacto" class="btn">
-                    Quiero participar →
+            <h1 class="reveal">
+                Tu cuerpo.
+                <br>
+                Tu voz.
+                <br>
+                <span>Tu futuro.</span>
+            </h1>
+
+            <p class="hero-description reveal">
+                Un espacio creado por y para jóvenes donde hablar de
+                sexualidad, relaciones, salud mental, derechos y proyectos
+                de vida <strong>sin prejuicios y sin tabúes.</strong>
+            </p>
+
+            <div class="hero-buttons reveal">
+
+                <a href="#pilares" class="btn btn-primary">
+                    Explora la tribu
+                    <i class="fa-solid fa-arrow-down"></i>
+                </a>
+
+                <a href="#test" class="btn btn-outline">
+                    Pon a prueba tus conocimientos
                 </a>
 
             </div>
 
-        </section>
-
-
-        <!-- =========================
-             FAQ
-        ========================== -->
-
-        <section class="faq" id="faq">
-
-            <div class="faq-container">
-
-                <div class="section-header">
-
-                    <div class="section-label">
-                        PREGUNTAS FRECUENTES
-                    </div>
-
-                    <h2>
-                        Resolvamos tus dudas.
-                    </h2>
-
-                </div>
-
-
-                <div class="faq-item">
-
-                    <button class="faq-question">
-
-                        ¿A quién está dirigida esta campaña?
-
-                        <span class="plus">+</span>
-
-                    </button>
-
-                    <div class="faq-answer">
-
-                        <p>
-                            Principalmente a adolescentes y
-                            jóvenes de la región, así como a
-                            personas que acompañan sus procesos
-                            educativos, familiares y comunitarios.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="faq-item">
-
-                    <button class="faq-question">
-
-                        ¿Qué temas puedo encontrar?
-
-                        <span class="plus">+</span>
-
-                    </button>
-
-                    <div class="faq-answer">
-
-                        <p>
-                            La plataforma aborda Educación
-                            Sexual Integral y Proyecto de Vida,
-                            Prevención de Violencias de Género
-                            y Embarazo Infantil, y Salud Mental
-                            en la Adolescencia.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="faq-item">
-
-                    <button class="faq-question">
-
-                        ¿Cómo puedo participar?
-
-                        <span class="plus">+</span>
-
-                    </button>
-
-                    <div class="faq-answer">
-
-                        <p>
-                            Puedes participar compartiendo
-                            contenidos, utilizando los recursos,
-                            difundiendo la campaña o contactando
-                            al equipo.
-                        </p>
-
-                    </div>
-
-                </div>
-
+            <div class="hero-note reveal">
+                <i class="fa-solid fa-heart"></i>
+                Información para decidir. Herramientas para actuar.
             </div>
 
-        </section>
+        </div>
 
 
-        <!-- =========================
-             CONTACTO
-        ========================== -->
+        <div class="hero-visual reveal">
 
-        <section class="contact" id="contacto">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
 
-            <div class="container">
+            <div class="hero-card">
 
-                <div class="contact-grid">
+                <div class="hero-card-top">
+                    <span>LA TRIBU</span>
 
-                    <div class="contact-info">
-
-                        <div class="section-label">
-                            PARTICIPA
-                        </div>
-
-                        <h2>
-                            Hagamos de la
-                            información una
-                            herramienta.
-                        </h2>
-
-                        <p>
-                            Si quieres ser parte de la campaña,
-                            colaborar con contenidos o conocer
-                            nuestras iniciativas, déjanos tus
-                            datos.
-                        </p>
-
-                        <p>
-                            <strong>
-                                Las juventudes no son solamente
-                                parte de la conversación.
-                                Son quienes la están construyendo.
-                            </strong>
-                        </p>
-
-                    </div>
-
-
-                    <form class="contact-form" id="contactForm">
-
-                        <div class="form-group">
-
-                            <label for="nombre">
-                                Nombre
-                            </label>
-
-                            <input
-                                type="text"
-                                id="nombre"
-                                placeholder="Tu nombre"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="email">
-                                Correo electrónico
-                            </label>
-
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="tu@email.com"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <label for="mensaje">
-                                ¿Cómo te gustaría participar?
-                            </label>
-
-                            <textarea
-                                id="mensaje"
-                                placeholder="Cuéntanos..."
-                                required>
-                            </textarea>
-
-                        </div>
-
-
-                        <button
-                            type="submit"
-                            class="btn btn-primary">
-
-                            Enviar mensaje →
-
-                        </button>
-
-                    </form>
-
+                    <span class="status">
+                        <i class="fa-solid fa-circle"></i>
+                        ONLINE
+                    </span>
                 </div>
 
-            </div>
+                <div class="hero-card-center">
 
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================== -->
-
-    <footer>
-
-        <div class="footer-container">
-
-            <div class="footer-grid">
-
-                <div class="footer-brand">
-
-                    <div class="logo footer-logo">
-
-                        <span class="logo-icon">
-                            ✦
-                        </span>
-
-                        <span>
-                            DECIDE<span class="logo-plus">
-                                +
-                            </span>
-                        </span>
-
+                    <div class="hero-symbol">
+                        <i class="fa-solid fa-users"></i>
                     </div>
+
+                    <h3>
+                        Aquí puedes
+                        <span>hablar de todo.</span>
+                    </h3>
 
                     <p>
-                        Una campaña regional liderada por
-                        adolescentes y jóvenes para promover
-                        información, autonomía y decisiones
-                        responsables.
+                        Porque preguntar también es cuidarte.
                     </p>
 
                 </div>
 
-
-                <div class="footer-column">
-
-                    <h4>Explora</h4>
-
-                    <a href="#nosotros">
-                        La campaña
-                    </a>
-
-                    <a href="#tematicas">
-                        Temáticas
-                    </a>
-
-                    <a href="#recursos">
-                        Recursos
-                    </a>
-
-                    <a href="#faq">
-                        Preguntas frecuentes
-                    </a>
-
+                <div class="hero-card-bottom">
+                    <span>#SinTabú</span>
+                    <span>#ConInformación</span>
                 </div>
-
-
-                <div class="footer-column">
-
-                    <h4>Participa</h4>
-
-                    <a href="#contacto">
-                        Únete
-                    </a>
-
-                    <a href="#">
-                        Instagram
-                    </a>
-
-                    <a href="#">
-                        TikTok
-                    </a>
-
-                    <a href="#">
-                        Contacto
-                    </a>
-
-                </div>
-
-            </div>
-
-
-            <div class="footer-bottom">
-
-                <span>
-                    © 2026 DECIDE+ · Campaña juvenil
-                </span>
-
-                <span>
-                    Información para decisiones informadas
-                </span>
 
             </div>
 
         </div>
 
-    </footer>
+    </div>
 
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+    <div class="hero-scroll">
+        <span>DESCUBRE MÁS</span>
+        <div class="scroll-line"></div>
+    </div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="intro section" id="nosotros">
+
+    <div class="section-container">
+
+        <div class="intro-grid">
+
+            <div class="intro-label reveal">
+                <span>01</span>
+                <p>¿QUÉ ES<br>LA TRIBU?</p>
+            </div>
+
+            <div class="intro-content reveal">
+
+                <h2>
+                    Hablar de sexualidad
+                    <em>también es hablar de futuro.</em>
+                </h2>
+
+                <p>
+                    La prevención del embarazo adolescente no empieza
+                    únicamente con un anticonceptivo. Empieza con
+                    información, educación, autonomía, relaciones
+                    saludables, salud mental y oportunidades.
+                </p>
+
+                <p>
+                    <strong>La Tribu Sin Tabú</strong> es un espacio para
+                    aprender, cuestionar y conversar sobre aquello que
+                    muchas veces no nos enseñaron a preguntar.
+                </p>
+
+                <a href="#pilares" class="text-link">
+                    Conoce nuestros pilares
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats-section">
+
+    <div class="section-container">
+
+        <div class="stats-grid">
+
+            <div class="stat reveal">
+                <strong data-counter="5">0</strong>
+                <span>Pilares fundamentales</span>
+            </div>
+
+            <div class="stat reveal">
+                <strong data-counter="100">0</strong>
+                <span>% información sin prejuicios</span>
+            </div>
+
+            <div class="stat reveal">
+                <strong>∞</strong>
+                <span>Preguntas que puedes hacer</span>
+            </div>
+
+            <div class="stat reveal">
+                <strong>1</strong>
+                <span>Tribu para acompañarte</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PILARES ================= -->
+
+<section class="pillars section" id="pilares">
+
+    <div class="section-container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">02</div>
+
+            <div>
+                <span class="section-tag">NUESTROS PILARES</span>
+
+                <h2>
+                    Cinco conversaciones.
+                    <br>
+                    <span>Una visión integral.</span>
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="pillars-grid">
+
+
+            <!-- ESI -->
+
+            <article class="pillar-card pillar-turquoise reveal">
+
+                <div class="pillar-number">01</div>
+
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+
+                <h3>
+                    Educación
+                    <br>
+                    Sexual Integral
+                </h3>
+
+                <p>
+                    Conocer tu cuerpo, tus derechos, el consentimiento
+                    y las herramientas para tomar decisiones informadas.
+                </p>
+
+                <button class="pillar-more"
+                    data-modal="esiModal">
+                    Explorar
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- PROYECTO -->
+
+            <article class="pillar-card pillar-purple reveal">
+
+                <div class="pillar-number">02</div>
+
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-compass"></i>
+                </div>
+
+                <h3>
+                    Proyecto
+                    <br>
+                    de vida
+                </h3>
+
+                <p>
+                    Tus decisiones de hoy también forman parte del futuro
+                    que quieres construir.
+                </p>
+
+                <button class="pillar-more"
+                    data-modal="futureModal">
+                    Explorar
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- VIOLENCIA -->
+
+            <article class="pillar-card pillar-dark reveal">
+
+                <div class="pillar-number">03</div>
+
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-shield-heart"></i>
+                </div>
+
+                <h3>
+                    Relaciones
+                    <br>
+                    sin violencia
+                </h3>
+
+                <p>
+                    Reconoce señales de control, violencia de género,
+                    abuso y violencia digital.
+                </p>
+
+                <button class="pillar-more"
+                    data-modal="violenceModal">
+                    Explorar
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- SALUD MENTAL -->
+
+            <article class="pillar-card pillar-pink reveal">
+
+                <div class="pillar-number">04</div>
+
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+
+                <h3>
+                    Salud
+                    <br>
+                    mental
+                </h3>
+
+                <p>
+                    Entender lo que sientes también forma parte
+                    de cuidarte.
+                </p>
+
+                <button class="pillar-more"
+                    data-modal="mentalModal">
+                    Explorar
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+
+            <!-- DERECHOS -->
+
+            <article class="pillar-card pillar-green reveal">
+
+                <div class="pillar-number">05</div>
+
+                <div class="pillar-icon">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                </div>
+
+                <h3>
+                    Derechos
+                    <br>
+                    y oportunidades
+                </h3>
+
+                <p>
+                    Información, salud, educación y protección también
+                    son tus derechos.
+                </p>
+
+                <button class="pillar-more"
+                    data-modal="rightsModal">
+                    Explorar
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FRASE ================= -->
+
+<section class="quote-section">
+
+    <div class="quote-decoration"></div>
+
+    <div class="quote-container reveal">
+
+        <span class="quote-mark">“</span>
+
+        <h2>
+            Prevenir no significa decirte
+            <span>qué hacer con tu vida.</span>
+        </h2>
+
+        <p>
+            Significa garantizar que tengas información,
+            oportunidades, protección y libertad para decidir sobre ella.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= MITOS ================= -->
+
+<section class="myths section" id="mitos">
+
+    <div class="section-container">
+
+        <div class="section-heading centered reveal">
+
+            <span class="section-tag">SIN TABÚ</span>
+
+            <h2>
+                Pregunta.
+                <span>Cuestiona.</span>
+                Aprende.
+            </h2>
+
+            <p>
+                Hay cosas que escuchamos tantas veces que terminamos
+                creyéndolas. Aquí las ponemos a prueba.
+            </p>
+
+        </div>
+
+
+        <div class="myths-wrapper">
+
+            <div class="myth-card reveal active">
+
+                <span class="myth-label">MITO #01</span>
+
+                <h3>
+                    “Hablar de educación sexual
+                    hace que los adolescentes
+                    comiencen su vida sexual antes.”
+                </h3>
+
+                <div class="myth-answer">
+
+                    <span>REALIDAD</span>
+
+                    <p>
+                        La evidencia sobre programas de ESI de calidad
+                        muestra que pueden favorecer decisiones más
+                        informadas, el uso de anticonceptivos y una
+                        mayor capacidad para establecer límites.
+                    </p>
+
+                </div>
+
+                <button class="myth-button">
+                    <span>Ver respuesta</span>
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+
+            </div>
+
+
+            <div class="myth-navigation">
+
+                <button class="myth-prev">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+
+                <div class="myth-progress">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <button class="myth-next">
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= TEST ================= -->
+
+<section class="test-section section" id="test">
+
+    <div class="section-container">
+
+        <div class="test-box reveal">
+
+            <div class="test-content">
+
+                <span class="section-tag">¿CUÁNTO SABES?</span>
+
+                <h2>
+                    Rompe los mitos.
+                    <br>
+                    <span>Pon a prueba lo que sabes.</span>
+                </h2>
+
+                <p>
+                    Responde estas preguntas y descubre cuánto sabes
+                    sobre ESI, consentimiento, anticoncepción,
+                    relaciones saludables y salud mental.
+                </p>
+
+                <button class="btn btn-white" id="startQuiz">
+                    Comenzar el test
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+            <div class="test-decoration">
+
+                <div class="quiz-circle">
+                    <span>?</span>
+                </div>
+
+                <div class="mini-circle circle-a">+</div>
+                <div class="mini-circle circle-b">✦</div>
+                <div class="mini-circle circle-c">?</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROYECTO DE VIDA ================= -->
+
+<section class="future-section section" id="futuro">
+
+    <div class="section-container">
+
+        <div class="future-grid">
+
+            <div class="future-visual reveal">
+
+                <div class="future-main-card">
+
+                    <span>MI PROYECTO</span>
+
+                    <div class="future-icon">
+                        <i class="fa-solid fa-compass"></i>
+                    </div>
+
+                    <h3>
+                        El futuro
+                        <br>
+                        también se construye hoy.
+                    </h3>
+
+                </div>
+
+                <div class="future-small-card">
+                    <i class="fa-solid fa-star"></i>
+                    <span>Tus metas importan.</span>
+                </div>
+
+            </div>
+
+
+            <div class="future-content reveal">
+
+                <span class="section-tag">TU FUTURO</span>
+
+                <h2>
+                    ¿Dónde te imaginas
+                    <span>en cinco años?</span>
+                </h2>
+
+                <p>
+                    Construir un proyecto de vida significa pensar en
+                    tus metas, tus valores, tus relaciones, tus sueños
+                    y las decisiones que quieres tomar.
+                </p>
+
+                <div class="future-list">
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        <span>Define tus metas.</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        <span>Conoce tus derechos.</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        <span>Cuida tus relaciones.</span>
+                    </div>
+
+                    <div>
+                        <i class="fa-solid fa-check"></i>
+                        <span>Busca apoyo cuando lo necesites.</span>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-primary" id="futureButton">
+                    Crear mi visión
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DIGITAL VIOLENCE ================= -->
+
+<section class="digital-section">
+
+    <div class="section-container">
+
+        <div class="digital-content reveal">
+
+            <div class="digital-label">
+                <i class="fa-solid fa-wifi"></i>
+                TAMBIÉN PASA EN INTERNET
+            </div>
+
+            <h2>
+                Tu vida digital
+                <br>
+                <span>también merece límites.</span>
+            </h2>
+
+            <p>
+                Ciberacoso, sextorsión, grooming, cibervigilancia
+                y difusión no consentida de contenido íntimo también
+                son formas de violencia.
+            </p>
+
+            <div class="digital-tags">
+
+                <span>#Privacidad</span>
+                <span>#Consentimiento</span>
+                <span>#SeguridadDigital</span>
+                <span>#SinViolencia</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= RECURSOS ================= -->
+
+<section class="resources section" id="recursos">
+
+    <div class="section-container">
+
+        <div class="section-heading reveal">
+
+            <div class="section-number">03</div>
+
+            <div>
+                <span class="section-tag">HERRAMIENTAS</span>
+
+                <h2>
+                    No tienes que
+                    <span>saberlo todo.</span>
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="resources-grid">
+
+            <article class="resource-card reveal">
+
+                <div class="resource-icon">
+                    <i class="fa-solid fa-book"></i>
+                </div>
+
+                <h3>Aprende</h3>
+
+                <p>
+                    Accede a contenidos sobre sexualidad,
+                    relaciones, derechos y salud.
+                </p>
+
+                <a href="#" class="text-link">
+                    Explorar recursos
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </article>
+
+
+            <article class="resource-card reveal">
+
+                <div class="resource-icon">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+
+                <h3>Habla</h3>
+
+                <p>
+                    Encuentra espacios seguros para conversar,
+                    preguntar y compartir.
+                </p>
+
+                <a href="#" class="text-link">
+                    Conocer espacios
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </article>
+
+
+            <article class="resource-card reveal">
+
+                <div class="resource-icon">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+
+                <h3>Pide ayuda</h3>
+
+                <p>
+                    Buscar apoyo no te hace débil. Te hace
+                    consciente de lo que necesitas.
+                </p>
+
+                <a href="#" class="text-link">
+                    Ver opciones
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="final-cta">
+
+    <div class="cta-pattern"></div>
+
+    <div class="section-container">
+
+        <div class="cta-content reveal">
+
+            <span class="section-tag light">SOMOS TRIBU</span>
+
+            <h2>
+                Porque hablar
+                <br>
+                también es cuidarnos.
+            </h2>
+
+            <p>
+                Comparte información. Haz preguntas.
+                Cuestiona lo que aprendiste.
+                Construye el futuro que quieres.
+            </p>
+
+            <a href="#inicio" class="btn btn-white">
+                Volver al inicio
+                <i class="fa-solid fa-arrow-up"></i>
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="section-container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+
+                <a href="#inicio" class="logo footer-logo">
+
+                    <span class="logo-symbol">✦</span>
+
+                    <div>
+                        <span class="logo-main">LA TRIBU</span>
+                        <span class="logo-sub">SIN TABÚ</span>
+                    </div>
+
+                </a>
+
+                <p>
+                    Información, derechos y oportunidades
+                    para construir un futuro sin tabúes.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Explora</h4>
+
+                <a href="#nosotros">Nosotros</a>
+                <a href="#pilares">Pilares</a>
+                <a href="#mitos">Sin tabú</a>
+                <a href="#test">Test</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Temas</h4>
+
+                <a href="#pilares">ESI</a>
+                <a href="#futuro">Proyecto de vida</a>
+                <a href="#pilares">Salud mental</a>
+                <a href="#pilares">Violencia</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Conecta</h4>
+
+                <div class="social-links">
+
+                    <a href="#" aria-label="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#" aria-label="TikTok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+
+                    <a href="#" aria-label="Facebook">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 La Tribu Sin Tabú
+            </span>
+
+            <span>
+                Creado para informar, acompañar y transformar.
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- ================= MODALS ================= -->
+
+<div class="modal" id="esiModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close">&times;</button>
+
+        <span class="section-tag">PILAR 01</span>
+
+        <h2>Educación Sexual Integral</h2>
+
+        <p>
+            La ESI permite aprender sobre los aspectos físicos,
+            emocionales, sociales y cognitivos de la sexualidad.
+        </p>
+
+        <div class="modal-points">
+
+            <span><i class="fa-solid fa-check"></i> Conocer tu cuerpo</span>
+            <span><i class="fa-solid fa-check"></i> Consentimiento</span>
+            <span><i class="fa-solid fa-check"></i> Relaciones saludables</span>
+            <span><i class="fa-solid fa-check"></i> Anticoncepción</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal" id="futureModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close">&times;</button>
+
+        <span class="section-tag">PILAR 02</span>
+
+        <h2>Proyecto de vida</h2>
+
+        <p>
+            Tu proyecto de vida reúne tus metas, valores,
+            decisiones y sueños. Pensar en el futuro también
+            es una forma de autocuidado.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="modal" id="violenceModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close">&times;</button>
+
+        <span class="section-tag">PILAR 03</span>
+
+        <h2>Relaciones sin violencia</h2>
+
+        <p>
+            Una relación saludable respeta tus límites,
+            tu privacidad, tus decisiones y tu autonomía.
+        </p>
+
+        <div class="modal-points">
+
+            <span><i class="fa-solid fa-check"></i> Sin control</span>
+            <span><i class="fa-solid fa-check"></i> Sin amenazas</span>
+            <span><i class="fa-solid fa-check"></i> Sin presión</span>
+            <span><i class="fa-solid fa-check"></i> Con consentimiento</span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="modal" id="mentalModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close">&times;</button>
+
+        <span class="section-tag">PILAR 04</span>
+
+        <h2>Salud mental</h2>
+
+        <p>
+            Reconocer tus emociones, hablar de lo que sientes
+            y pedir ayuda cuando la necesitas también es salud.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="modal" id="rightsModal">
+
+    <div class="modal-content">
+
+        <button class="modal-close">&times;</button>
+
+        <span class="section-tag">PILAR 05</span>
+
+        <h2>Tus derechos importan</h2>
+
+        <p>
+            La información, la educación, la salud,
+            la protección y la participación son parte
+            de una vida digna.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ================= QUIZ ================= -->
+
+<div class="quiz-modal" id="quizModal">
+
+    <div class="quiz-box">
+
+        <button class="quiz-close">&times;</button>
+
+        <div id="quizContent">
+
+            <span class="section-tag">TEST SIN TABÚ</span>
+
+            <div class="quiz-progress-bar">
+                <span id="quizProgress"></span>
+            </div>
+
+            <p class="quiz-question-number" id="questionNumber"></p>
+
+            <h2 id="question"></h2>
+
+            <div class="quiz-options" id="options"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
+```
