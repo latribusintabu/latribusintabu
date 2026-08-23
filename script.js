@@ -1,975 +1,215 @@
-/* =========================================================
-   ESI - EDUCACIÓN SEXUAL INTEGRAL
-   JavaScript principal
-   Compatible con GitHub Pages
-   ========================================================= */
+document.addEventListener('DOMContentLoaded', () => {
 
-   document.addEventListener("DOMContentLoaded", () => {
+  /* ---------- Barra de progreso de scroll ---------- */
+  const scrollProgress = document.getElementById('scrollProgress');
+  const updateProgress = () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = pct + '%';
+  };
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
 
-    /* =====================================================
-       1. MENÚ MÓVIL
-       ===================================================== */
+  /* ---------- Menú móvil ---------- */
+  const navToggle = document.getElementById('navToggle');
+  const mainNav = document.getElementById('mainNav');
 
-    const menuToggle = document.querySelector(".menu-toggle");
-    const navMenu = document.querySelector(".nav-menu");
+  navToggle.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
 
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener("click", () => {
-            navMenu.classList.toggle("active");
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mainNav.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
 
-            const expanded =
-                menuToggle.getAttribute("aria-expanded") === "true";
+  /* ---------- Barra de crisis (cerrar) ---------- */
+  const crisisBar = document.getElementById('crisisBar');
+  const crisisClose = document.getElementById('crisisClose');
+  crisisClose.addEventListener('click', () => {
+    crisisBar.classList.add('is-hidden');
+  });
 
-            menuToggle.setAttribute(
-                "aria-expanded",
-                String(!expanded)
-            );
-        });
+  /* ---------- Resaltar sección activa al hacer scroll ---------- */
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.main-nav a[data-nav]');
 
-        // Cerrar menú al seleccionar una sección
-        const navLinks = navMenu.querySelectorAll("a");
-
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
         navLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                navMenu.classList.remove("active");
-                menuToggle.setAttribute("aria-expanded", "false");
-            });
+          link.classList.toggle('is-active', link.getAttribute('data-nav') === id);
         });
-    }
-
-
-    /* =====================================================
-       2. SCROLL SUAVE
-       ===================================================== */
-
-    const links = document.querySelectorAll('a[href^="#"]');
-
-    links.forEach(link => {
-        link.addEventListener("click", event => {
-
-            const targetId = link.getAttribute("href");
-
-            if (!targetId || targetId === "#") {
-                return;
-            }
-
-            const target = document.querySelector(targetId);
-
-            if (target) {
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            }
-        });
+      }
     });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
 
+  sections.forEach(section => sectionObserver.observe(section));
 
-    /* =====================================================
-       3. BOTÓN "VOLVER ARRIBA"
-       ===================================================== */
+  /* ---------- Acordeones (reutilizable) ---------- */
+  document.querySelectorAll('.accordion').forEach(accordion => {
+    const triggers = accordion.querySelectorAll('.accordion-trigger');
 
-    const backToTop = document.querySelector("#backToTop");
+    triggers.forEach(trigger => {
+      const panel = trigger.nextElementSibling;
 
-    if (backToTop) {
+      trigger.addEventListener('click', () => {
+        const isOpen = trigger.classList.contains('is-open');
 
-        const checkScroll = () => {
-            if (window.scrollY > 500) {
-                backToTop.classList.add("show");
-            } else {
-                backToTop.classList.remove("show");
-            }
-        };
-
-        window.addEventListener("scroll", checkScroll);
-
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-        });
-    }
-
-
-    /* =====================================================
-       4. ANIMACIONES AL HACER SCROLL
-       ===================================================== */
-
-    const animatedElements = document.querySelectorAll(
-        ".animate-on-scroll, .info-card, .pillar-card, .stat-card"
-    );
-
-    if ("IntersectionObserver" in window) {
-
-        const observer = new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                        observer.unobserve(entry.target);
-                    }
-
-                });
-
-            },
-            {
-                threshold: 0.15
-            }
-        );
-
-        animatedElements.forEach(element => {
-            observer.observe(element);
+        triggers.forEach(otherTrigger => {
+          otherTrigger.classList.remove('is-open');
+          otherTrigger.nextElementSibling.style.maxHeight = null;
         });
 
-    } else {
-
-        animatedElements.forEach(element => {
-            element.classList.add("visible");
-        });
-
-    }
-
-
-    /* =====================================================
-       5. ACORDEÓN - PREGUNTAS FRECUENTES
-       ===================================================== */
-
-    const faqItems = document.querySelectorAll(".faq-item");
-
-    faqItems.forEach(item => {
-
-        const question = item.querySelector(".faq-question");
-
-        if (!question) {
-            return;
+        if (!isOpen) {
+          trigger.classList.add('is-open');
+          panel.style.maxHeight = panel.scrollHeight + 'px';
         }
-
-        question.addEventListener("click", () => {
-
-            const isActive = item.classList.contains("active");
-
-            // Cerrar los demás
-            faqItems.forEach(otherItem => {
-                otherItem.classList.remove("active");
-
-                const otherButton =
-                    otherItem.querySelector(".faq-question");
-
-                if (otherButton) {
-                    otherButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-                }
-            });
-
-            // Abrir el seleccionado
-            if (!isActive) {
-                item.classList.add("active");
-
-                question.setAttribute(
-                    "aria-expanded",
-                    "true"
-                );
-            }
-
-        });
-
+      });
     });
+  });
 
+  /* ---------- Pestañas (tabs) ---------- */
+  document.querySelectorAll('.tab-group').forEach(group => {
+    const buttons = group.querySelectorAll('.tab-btn');
+    const panels = group.querySelectorAll('.tab-panel');
 
-    /* =====================================================
-       6. FILTRO DE TEMÁTICAS
-       ===================================================== */
-
-    const filterButtons =
-        document.querySelectorAll("[data-filter]");
-
-    const filterCards =
-        document.querySelectorAll("[data-category]");
-
-    filterButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const filter = button.dataset.filter;
-
-            filterButtons.forEach(btn => {
-                btn.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            filterCards.forEach(card => {
-
-                const category = card.dataset.category;
-
-                if (
-                    filter === "all" ||
-                    category === filter
-                ) {
-                    card.style.display = "";
-                    card.classList.add("visible");
-                } else {
-                    card.style.display = "none";
-                }
-
-            });
-
-        });
-
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const target = button.getAttribute('data-tab');
+        buttons.forEach(b => b.classList.toggle('is-active', b === button));
+        panels.forEach(p => p.classList.toggle('is-active', p.getAttribute('data-panel') === target));
+      });
     });
+  });
 
+  /* ---------- Tarjetas mito/realidad (flip) ---------- */
+  document.querySelectorAll('.flip-card').forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('is-flipped');
+    });
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.classList.toggle('is-flipped');
+      }
+    });
+  });
 
-    /* =====================================================
-       7. MODALES INFORMATIVOS
-       ===================================================== */
+  /* ---------- Stepper "Cuatro pasos" ---------- */
+  document.querySelectorAll('.stepper').forEach(stepper => {
+    const dots = stepper.querySelectorAll('.stepper-dot');
+    const panels = stepper.querySelectorAll('.stepper-panel');
+    const fill = stepper.querySelector('.stepper-line span');
+    const total = dots.length;
 
-    const modalButtons =
-        document.querySelectorAll("[data-modal]");
-
-    const modals =
-        document.querySelectorAll(".modal");
-
-    const closeModal = modal => {
-
-        modal.classList.remove("active");
-        document.body.classList.remove("modal-open");
-
+    const goToStep = (stepNum) => {
+      dots.forEach(dot => {
+        dot.classList.toggle('is-active', dot.getAttribute('data-step') === String(stepNum));
+      });
+      panels.forEach(panel => {
+        panel.classList.toggle('is-active', panel.getAttribute('data-panel') === String(stepNum));
+      });
+      if (fill) {
+        fill.style.width = (stepNum / total) * 100 + '%';
+      }
     };
 
-    modalButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const modalId =
-                button.getAttribute("data-modal");
-
-            const modal =
-                document.getElementById(modalId);
-
-            if (modal) {
-                modal.classList.add("active");
-                document.body.classList.add("modal-open");
-            }
-
-        });
-
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => goToStep(dot.getAttribute('data-step')));
     });
 
-    modals.forEach(modal => {
+    goToStep(1);
+  });
 
-        const closeButtons =
-            modal.querySelectorAll(".modal-close");
-
-        closeButtons.forEach(button => {
-
-            button.addEventListener("click", () => {
-                closeModal(modal);
-            });
-
+  /* ---------- Gráficos de barras animados al entrar en pantalla ---------- */
+  const barCharts = document.querySelectorAll('.bar-chart');
+  const chartObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
+          const value = bar.getAttribute('data-value');
+          bar.style.width = value + '%';
         });
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.35 });
 
-        modal.addEventListener("click", event => {
+  barCharts.forEach(chart => chartObserver.observe(chart));
 
-            if (event.target === modal) {
-                closeModal(modal);
-            }
+  /* ---------- Carrusel ---------- */
+  const track = document.getElementById('carouselTrack');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  const dotsWrap = document.getElementById('carouselDots');
 
-        });
+  if (track) {
+    const slides = Array.from(track.children);
 
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', 'Ir a la diapositiva ' + (i + 1));
+      if (i === 0) dot.classList.add('is-active');
+      dot.addEventListener('click', () => scrollToSlide(i));
+      dotsWrap.appendChild(dot);
     });
 
-    // Cerrar modal con ESC
-    document.addEventListener("keydown", event => {
+    const dots = Array.from(dotsWrap.children);
 
-        if (event.key === "Escape") {
-
-            modals.forEach(modal => {
-
-                if (modal.classList.contains("active")) {
-                    closeModal(modal);
-                }
-
-            });
-
-        }
-
-    });
-
-
-    /* =====================================================
-       8. CONTADORES ANIMADOS
-       ===================================================== */
-
-    const counters =
-        document.querySelectorAll("[data-counter]");
-
-    const animateCounter = element => {
-
-        const target =
-            parseFloat(element.dataset.counter);
-
-        const duration = 1800;
-        const startTime = performance.now();
-
-        const update = currentTime => {
-
-            const elapsed =
-                currentTime - startTime;
-
-            const progress =
-                Math.min(elapsed / duration, 1);
-
-            // Efecto de desaceleración
-            const ease =
-                1 - Math.pow(1 - progress, 3);
-
-            const currentValue =
-                target * ease;
-
-            if (Number.isInteger(target)) {
-
-                element.textContent =
-                    Math.floor(currentValue);
-
-            } else {
-
-                element.textContent =
-                    currentValue.toFixed(1);
-
-            }
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            } else {
-                element.textContent =
-                    Number.isInteger(target)
-                        ? target
-                        : target.toFixed(1);
-            }
-
-        };
-
-        requestAnimationFrame(update);
-    };
-
-
-    if ("IntersectionObserver" in window) {
-
-        const counterObserver =
-            new IntersectionObserver(entries => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        animateCounter(entry.target);
-
-                        counterObserver.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            }, {
-                threshold: 0.5
-            });
-
-        counters.forEach(counter => {
-            counterObserver.observe(counter);
-        });
-
-    } else {
-
-        counters.forEach(counter => {
-            animateCounter(counter);
-        });
-
+    function scrollToSlide(index) {
+      const slide = slides[index];
+      track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
     }
 
-
-    /* =====================================================
-       9. BARRAS DE PROGRESO
-       ===================================================== */
-
-    const progressBars =
-        document.querySelectorAll(".progress-bar");
-
-    if ("IntersectionObserver" in window) {
-
-        const progressObserver =
-            new IntersectionObserver(entries => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        const value =
-                            entry.target.dataset.progress;
-
-                        entry.target.style.width =
-                            `${value}%`;
-
-                        progressObserver.unobserve(
-                            entry.target
-                        );
-
-                    }
-
-                });
-
-            }, {
-                threshold: 0.3
-            });
-
-        progressBars.forEach(bar => {
-            progressObserver.observe(bar);
-        });
-
+    function currentIndex() {
+      const trackCenter = track.scrollLeft + track.clientWidth / 2;
+      let closest = 0;
+      let closestDist = Infinity;
+      slides.forEach((slide, i) => {
+        const slideCenter = slide.offsetLeft + slide.clientWidth / 2;
+        const dist = Math.abs(slideCenter - trackCenter);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      return closest;
     }
 
-
-    /* =====================================================
-       10. SISTEMA DE TABS
-       ===================================================== */
-
-    const tabButtons =
-        document.querySelectorAll("[data-tab]");
-
-    const tabContents =
-        document.querySelectorAll("[data-tab-content]");
-
-    tabButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const target =
-                button.dataset.tab;
-
-            tabButtons.forEach(btn => {
-                btn.classList.remove("active");
-            });
-
-            tabContents.forEach(content => {
-                content.classList.remove("active");
-            });
-
-            button.classList.add("active");
-
-            const targetContent =
-                document.querySelector(
-                    `[data-tab-content="${target}"]`
-                );
-
-            if (targetContent) {
-                targetContent.classList.add("active");
-            }
-
-        });
-
-    });
-
-
-    /* =====================================================
-       11. BUSCADOR DE CONTENIDO
-       ===================================================== */
-
-    const searchInput =
-        document.querySelector("#searchInput");
-
-    const searchableElements =
-        document.querySelectorAll(".searchable");
-
-    if (searchInput) {
-
-        searchInput.addEventListener("input", () => {
-
-            const search =
-                searchInput.value
-                    .toLowerCase()
-                    .trim();
-
-            searchableElements.forEach(element => {
-
-                const text =
-                    element.textContent.toLowerCase();
-
-                if (text.includes(search)) {
-                    element.style.display = "";
-                } else {
-                    element.style.display = "none";
-                }
-
-            });
-
-        });
-
+    function updateDots() {
+      const idx = currentIndex();
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
     }
 
-
-    /* =====================================================
-       12. BOTÓN PARA COMPARTIR LA PÁGINA
-       ===================================================== */
-
-    const shareButton =
-        document.querySelector("#shareButton");
-
-    if (shareButton) {
-
-        shareButton.addEventListener("click", async () => {
-
-            const shareData = {
-                title: document.title,
-                text:
-                    "Educación Sexual Integral, proyecto de vida, prevención de violencias y salud mental.",
-                url: window.location.href
-            };
-
-            try {
-
-                if (
-                    navigator.share &&
-                    typeof navigator.share === "function"
-                ) {
-
-                    await navigator.share(shareData);
-
-                } else {
-
-                    await navigator.clipboard.writeText(
-                        window.location.href
-                    );
-
-                    showNotification(
-                        "Enlace copiado al portapapeles."
-                    );
-
-                }
-
-            } catch (error) {
-
-                if (error.name !== "AbortError") {
-                    showNotification(
-                        "No se pudo compartir la página."
-                    );
-                }
-
-            }
-
-        });
-
-    }
-
-
-    /* =====================================================
-       13. COPIAR ENLACES
-       ===================================================== */
-
-    const copyButtons =
-        document.querySelectorAll("[data-copy]");
-
-    copyButtons.forEach(button => {
-
-        button.addEventListener("click", async () => {
-
-            const text =
-                button.dataset.copy;
-
-            if (!text) {
-                return;
-            }
-
-            try {
-
-                await navigator.clipboard.writeText(text);
-
-                showNotification(
-                    "Información copiada correctamente."
-                );
-
-            } catch (error) {
-
-                showNotification(
-                    "No fue posible copiar la información."
-                );
-
-            }
-
-        });
-
-    });
-
-
-    /* =====================================================
-       14. NOTIFICACIONES
-       ===================================================== */
-
-    function showNotification(message) {
-
-        let notification =
-            document.querySelector(".site-notification");
-
-        if (!notification) {
-
-            notification =
-                document.createElement("div");
-
-            notification.className =
-                "site-notification";
-
-            document.body.appendChild(
-                notification
-            );
-
-        }
-
-        notification.textContent = message;
-        notification.classList.add("show");
-
-        setTimeout(() => {
-            notification.classList.remove("show");
-        }, 3000);
-
-    }
-
-
-    /* =====================================================
-       15. RESALTAR SECCIÓN ACTIVA
-       ===================================================== */
-
-    const sections =
-        document.querySelectorAll("section[id]");
-
-    const sectionLinks =
-        document.querySelectorAll(
-            '.nav-menu a[href^="#"]'
-        );
-
-    if ("IntersectionObserver" in window) {
-
-        const sectionObserver =
-            new IntersectionObserver(entries => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-
-                        const id =
-                            entry.target.getAttribute("id");
-
-                        sectionLinks.forEach(link => {
-
-                            link.classList.remove("active");
-
-                            if (
-                                link.getAttribute("href") ===
-                                `#${id}`
-                            ) {
-                                link.classList.add("active");
-                            }
-
-                        });
-
-                    }
-
-                });
-
-            }, {
-                rootMargin: "-30% 0px -60% 0px"
-            });
-
-        sections.forEach(section => {
-            sectionObserver.observe(section);
-        });
-
-    }
-
-
-    /* =====================================================
-       16. DETECCIÓN DEL AÑO ACTUAL
-       ===================================================== */
-
-    const yearElements =
-        document.querySelectorAll("[data-year]");
-
-    yearElements.forEach(element => {
-        element.textContent =
-            new Date().getFullYear();
-    });
-
-
-    /* =====================================================
-       17. FORMULARIO DE CONTACTO
-       ===================================================== */
-
-    const contactForm =
-        document.querySelector("#contactForm");
-
-    if (contactForm) {
-
-        contactForm.addEventListener("submit", event => {
-
-            event.preventDefault();
-
-            const name =
-                contactForm.querySelector(
-                    '[name="name"]'
-                );
-
-            const email =
-                contactForm.querySelector(
-                    '[name="email"]'
-                );
-
-            const message =
-                contactForm.querySelector(
-                    '[name="message"]'
-                );
-
-            if (
-                !name ||
-                !email ||
-                !message
-            ) {
-                return;
-            }
-
-            if (
-                name.value.trim() === "" ||
-                email.value.trim() === "" ||
-                message.value.trim() === ""
-            ) {
-
-                showNotification(
-                    "Completa todos los campos."
-                );
-
-                return;
-            }
-
-            if (!isValidEmail(email.value)) {
-
-                showNotification(
-                    "Ingresa un correo electrónico válido."
-                );
-
-                return;
-            }
-
-            showNotification(
-                "¡Gracias por comunicarte con nosotros!"
-            );
-
-            contactForm.reset();
-
-        });
-
-    }
-
-
-    /* =====================================================
-       18. VALIDACIÓN DE CORREO
-       ===================================================== */
-
-    function isValidEmail(email) {
-
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-            email
-        );
-
-    }
-
-
-    /* =====================================================
-       19. QUIZ EDUCATIVO
-       ===================================================== */
-
-    const quiz =
-        document.querySelector("#esiQuiz");
-
-    if (quiz) {
-
-        const questions =
-            quiz.querySelectorAll(".quiz-question");
-
-        const result =
-            quiz.querySelector(".quiz-result");
-
-        const submitButton =
-            quiz.querySelector(".quiz-submit");
-
-        if (submitButton) {
-
-            submitButton.addEventListener("click", () => {
-
-                let score = 0;
-                let answered = 0;
-
-                questions.forEach(question => {
-
-                    const selected =
-                        question.querySelector(
-                            'input[type="radio"]:checked'
-                        );
-
-                    if (!selected) {
-                        return;
-                    }
-
-                    answered++;
-
-                    if (
-                        selected.dataset.correct === "true"
-                    ) {
-                        score++;
-                    }
-
-                });
-
-                if (answered < questions.length) {
-
-                    showNotification(
-                        "Responde todas las preguntas antes de continuar."
-                    );
-
-                    return;
-                }
-
-                const percentage =
-                    Math.round(
-                        (score / questions.length) * 100
-                    );
-
-                if (result) {
-
-                    result.innerHTML = `
-                        <strong>Resultado: ${percentage}%</strong>
-                        <p>
-                            Respondiste correctamente
-                            ${score} de
-                            ${questions.length} preguntas.
-                        </p>
-                    `;
-
-                    result.classList.add("visible");
-
-                }
-
-            });
-
-        }
-
-    }
-
-
-    /* =====================================================
-       20. BOTONES DE INFORMACIÓN
-       ===================================================== */
-
-    const infoButtons =
-        document.querySelectorAll(".info-button");
-
-    infoButtons.forEach(button => {
-
-        button.addEventListener("click", () => {
-
-            const card =
-                button.closest(".info-card");
-
-            if (!card) {
-                return;
-            }
-
-            card.classList.toggle("expanded");
-
-            const expanded =
-                card.classList.contains("expanded");
-
-            button.textContent =
-                expanded
-                    ? "Ver menos"
-                    : "Ver más";
-
-        });
-
-    });
-
-
-    /* =====================================================
-       21. ACCESIBILIDAD
-       ===================================================== */
-
-    document.querySelectorAll("button").forEach(button => {
-
-        if (!button.hasAttribute("type")) {
-            button.setAttribute("type", "button");
-        }
-
-    });
-
-
-    /* =====================================================
-       22. PREVENIR ERRORES DE IMÁGENES
-       ===================================================== */
-
-    const images =
-        document.querySelectorAll("img");
-
-    images.forEach(image => {
-
-        image.addEventListener("error", () => {
-
-            image.classList.add("image-error");
-
-            // Mantiene el diseño aunque una imagen
-            // no exista o haya sido eliminada.
-            image.alt =
-                image.alt ||
-                "Imagen informativa de Educación Sexual Integral";
-
-        });
-
-    });
-
-
-    /* =====================================================
-       23. EFECTO PARALLAX SUAVE
-       ===================================================== */
-
-    const hero =
-        document.querySelector(".hero");
-
-    if (hero && window.innerWidth > 768) {
-
-        window.addEventListener("scroll", () => {
-
-            const scroll =
-                window.scrollY;
-
-            if (scroll < 800) {
-
-                hero.style.backgroundPosition =
-                    `center ${scroll * 0.25}px`;
-
-            }
-
-        });
-
-    }
-
-
-    /* =====================================================
-       24. INICIALIZACIÓN
-       ===================================================== */
-
-    document.body.classList.add("js-enabled");
+    prevBtn.addEventListener('click', () => scrollToSlide(Math.max(0, currentIndex() - 1)));
+    nextBtn.addEventListener('click', () => scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1)));
+
+    track.addEventListener('scroll', () => {
+      window.clearTimeout(track._scrollTimeout);
+      track._scrollTimeout = window.setTimeout(updateDots, 80);
+    }, { passive: true });
+
+    /* Autoplay suave, se detiene si el usuario interactúa */
+    let autoplay = window.setInterval(() => {
+      const next = (currentIndex() + 1) % slides.length;
+      scrollToSlide(next);
+    }, 4500);
+
+    const stopAutoplay = () => window.clearInterval(autoplay);
+    track.addEventListener('pointerdown', stopAutoplay);
+    prevBtn.addEventListener('click', stopAutoplay);
+    nextBtn.addEventListener('click', stopAutoplay);
+  }
+
+  /* ---------- Volver arriba ---------- */
+  const backToTop = document.getElementById('backToTop');
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 
 });
