@@ -1,4 +1,4 @@
-# FuturoLab EC — Una tribu sin tabú
+# FuturoLab EC — La tribu sin tabú
 
 Sitio web educativo de una sola página sobre Educación Sexual Integral (ESI),
 proyecto de vida, prevención de violencias de género y embarazo infantil, y
