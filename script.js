@@ -1,215 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* ---------- Barra de progreso de scroll ---------- */
-  const scrollProgress = document.getElementById('scrollProgress');
-  const updateProgress = () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    scrollProgress.style.width = pct + '%';
-  };
-  window.addEventListener('scroll', updateProgress, { passive: true });
-  updateProgress();
-
-  /* ---------- Menú móvil ---------- */
-  const navToggle = document.getElementById('navToggle');
-  const mainNav = document.getElementById('mainNav');
-
-  navToggle.addEventListener('click', () => {
-    const isOpen = mainNav.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-  });
-
-  mainNav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mainNav.classList.remove('is-open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  /* ---------- Barra de crisis (cerrar) ---------- */
-  const crisisBar = document.getElementById('crisisBar');
-  const crisisClose = document.getElementById('crisisClose');
-  crisisClose.addEventListener('click', () => {
-    crisisBar.classList.add('is-hidden');
-  });
-
-  /* ---------- Resaltar sección activa al hacer scroll ---------- */
-  const sections = document.querySelectorAll('main section[id]');
-  const navLinks = document.querySelectorAll('.main-nav a[data-nav]');
-
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          link.classList.toggle('is-active', link.getAttribute('data-nav') === id);
-        });
-      }
-    });
-  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-
-  sections.forEach(section => sectionObserver.observe(section));
-
-  /* ---------- Acordeones (reutilizable) ---------- */
-  document.querySelectorAll('.accordion').forEach(accordion => {
-    const triggers = accordion.querySelectorAll('.accordion-trigger');
-
-    triggers.forEach(trigger => {
-      const panel = trigger.nextElementSibling;
-
-      trigger.addEventListener('click', () => {
-        const isOpen = trigger.classList.contains('is-open');
-
-        triggers.forEach(otherTrigger => {
-          otherTrigger.classList.remove('is-open');
-          otherTrigger.nextElementSibling.style.maxHeight = null;
-        });
-
-        if (!isOpen) {
-          trigger.classList.add('is-open');
-          panel.style.maxHeight = panel.scrollHeight + 'px';
-        }
-      });
-    });
-  });
-
-  /* ---------- Pestañas (tabs) ---------- */
-  document.querySelectorAll('.tab-group').forEach(group => {
-    const buttons = group.querySelectorAll('.tab-btn');
-    const panels = group.querySelectorAll('.tab-panel');
-
-    buttons.forEach(button => {
-      button.addEventListener('click', () => {
-        const target = button.getAttribute('data-tab');
-        buttons.forEach(b => b.classList.toggle('is-active', b === button));
-        panels.forEach(p => p.classList.toggle('is-active', p.getAttribute('data-panel') === target));
-      });
-    });
-  });
-
-  /* ---------- Tarjetas mito/realidad (flip) ---------- */
-  document.querySelectorAll('.flip-card').forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('is-flipped');
-    });
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('role', 'button');
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        card.classList.toggle('is-flipped');
-      }
-    });
-  });
-
-  /* ---------- Stepper "Cuatro pasos" ---------- */
-  document.querySelectorAll('.stepper').forEach(stepper => {
-    const dots = stepper.querySelectorAll('.stepper-dot');
-    const panels = stepper.querySelectorAll('.stepper-panel');
-    const fill = stepper.querySelector('.stepper-line span');
-    const total = dots.length;
-
-    const goToStep = (stepNum) => {
-      dots.forEach(dot => {
-        dot.classList.toggle('is-active', dot.getAttribute('data-step') === String(stepNum));
-      });
-      panels.forEach(panel => {
-        panel.classList.toggle('is-active', panel.getAttribute('data-panel') === String(stepNum));
-      });
-      if (fill) {
-        fill.style.width = (stepNum / total) * 100 + '%';
-      }
-    };
-
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => goToStep(dot.getAttribute('data-step')));
-    });
-
-    goToStep(1);
-  });
-
-  /* ---------- Gráficos de barras animados al entrar en pantalla ---------- */
-  const barCharts = document.querySelectorAll('.bar-chart');
-  const chartObserver = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.bar-fill').forEach(bar => {
-          const value = bar.getAttribute('data-value');
-          bar.style.width = value + '%';
-        });
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.35 });
-
-  barCharts.forEach(chart => chartObserver.observe(chart));
-
-  /* ---------- Carrusel ---------- */
-  const track = document.getElementById('carouselTrack');
-  const prevBtn = document.getElementById('carouselPrev');
-  const nextBtn = document.getElementById('carouselNext');
-  const dotsWrap = document.getElementById('carouselDots');
-
-  if (track) {
-    const slides = Array.from(track.children);
-
-    slides.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.setAttribute('aria-label', 'Ir a la diapositiva ' + (i + 1));
-      if (i === 0) dot.classList.add('is-active');
-      dot.addEventListener('click', () => scrollToSlide(i));
-      dotsWrap.appendChild(dot);
-    });
-
-    const dots = Array.from(dotsWrap.children);
-
-    function scrollToSlide(index) {
-      const slide = slides[index];
-      track.scrollTo({ left: slide.offsetLeft - track.offsetLeft, behavior: 'smooth' });
-    }
-
-    function currentIndex() {
-      const trackCenter = track.scrollLeft + track.clientWidth / 2;
-      let closest = 0;
-      let closestDist = Infinity;
-      slides.forEach((slide, i) => {
-        const slideCenter = slide.offsetLeft + slide.clientWidth / 2;
-        const dist = Math.abs(slideCenter - trackCenter);
-        if (dist < closestDist) { closestDist = dist; closest = i; }
-      });
-      return closest;
-    }
-
-    function updateDots() {
-      const idx = currentIndex();
-      dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
-    }
-
-    prevBtn.addEventListener('click', () => scrollToSlide(Math.max(0, currentIndex() - 1)));
-    nextBtn.addEventListener('click', () => scrollToSlide(Math.min(slides.length - 1, currentIndex() + 1)));
-
-    track.addEventListener('scroll', () => {
-      window.clearTimeout(track._scrollTimeout);
-      track._scrollTimeout = window.setTimeout(updateDots, 80);
-    }, { passive: true });
-
-    /* Autoplay suave, se detiene si el usuario interactúa */
-    let autoplay = window.setInterval(() => {
-      const next = (currentIndex() + 1) % slides.length;
-      scrollToSlide(next);
-    }, 4500);
-
-    const stopAutoplay = () => window.clearInterval(autoplay);
-    track.addEventListener('pointerdown', stopAutoplay);
-    prevBtn.addEventListener('click', stopAutoplay);
-    nextBtn.addEventListener('click', stopAutoplay);
-  }
-
-  /* ---------- Volver arriba ---------- */
-  const backToTop = document.getElementById('backToTop');
-  backToTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-});
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{const grid=document.querySelector('#episodeGrid');if(!grid)return;document.querySelectorAll('.episodes-more').forEach(element=>element.remove());const cards=()=>Array.from(grid.querySelectorAll('.episode-card'));let page=1;const pagination=document.createElement('nav');pagination.className='episode-pagination';pagination.setAttribute('aria-label','Paginación de episodios');grid.after(pagination);const visibleCards=()=>cards().filter(card=>!card.classList.contains('is-hidden'));const render=()=>{const matches=visibleCards(),total=Math.max(1,Math.ceil(matches.length/3));page=Math.min(page,total);cards().forEach(card=>card.classList.add('collapsed'));matches.slice((page-1)*3,page*3).forEach(card=>card.classList.remove('collapsed'));pagination.innerHTML='';const previous=document.createElement('button');previous.type='button';previous.className='page-arrow';previous.textContent='←';previous.setAttribute('aria-label','Página anterior');previous.disabled=page===1;previous.onclick=()=>{page--;render()};pagination.append(previous);for(let number=1;number<=total;number++){const button=document.createElement('button');button.type='button';button.className='page-number';button.textContent=number;button.setAttribute('aria-label',`Página ${number}`);button.setAttribute('aria-current',number===page?'page':'false');if(number===page)button.classList.add('active');button.onclick=()=>{page=number;render()};pagination.append(button)}const next=document.createElement('button');next.type='button';next.className='page-arrow';next.textContent='→';next.setAttribute('aria-label','Página siguiente');next.disabled=page===total;next.onclick=()=>{page++;render()};pagination.append(next)};document.querySelectorAll('.filter').forEach(filter=>filter.addEventListener('click',()=>{page=1;setTimeout(render,0)}));render()},20));
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{const grid=document.querySelector('#episodeGrid'),button=document.querySelector('#toggleEpisodes');if(!grid||!button)return;const cards=()=>Array.from(grid.querySelectorAll('.episode-card'));let expanded=false;const apply=()=>cards().forEach((card,index)=>card.classList.toggle('collapsed',!expanded&&index>=3));apply();button.addEventListener('click',()=>{expanded=!expanded;setTimeout(apply,0)});document.querySelectorAll('.filter').forEach(filter=>filter.addEventListener('click',()=>{expanded=filter.dataset.filter!=='todos';setTimeout(apply,0)}))},10));
+document.addEventListener('DOMContentLoaded',()=>setTimeout(()=>{const grid=document.querySelector('#episodeGrid'),button=document.querySelector('#toggleEpisodes');if(!grid||!button)return;const cards=()=>Array.from(grid.querySelectorAll('.episode-card'));let expanded=false;const apply=()=>cards().forEach((card,index)=>card.classList.toggle('collapsed',!expanded&&index>=3));apply();button.addEventListener('click',()=>{expanded=!expanded;setTimeout(apply,0)});document.querySelectorAll('.filter').forEach(filter=>filter.addEventListener('click',()=>{expanded=filter.dataset.filter!=='todos';setTimeout(apply,0)}))},0));
+document.addEventListener('DOMContentLoaded',()=>{const grid=document.querySelector('#episodeGrid'),button=document.querySelector('#toggleEpisodes');if(!grid||!button)return;const cards=()=>Array.from(grid.querySelectorAll('.episode-card'));let expanded=false;const apply=()=>cards().forEach((card,index)=>card.classList.toggle('collapsed',!expanded&&index>=3));setTimeout(apply,0);button.addEventListener('click',()=>{expanded=!expanded;setTimeout(apply,0)});document.querySelectorAll('.filter').forEach(filter=>filter.addEventListener('click',()=>{expanded=filter.dataset.filter!=='todos';setTimeout(apply,0)}))});
+document.addEventListener('DOMContentLoaded',()=>{const about=document.querySelector('#nosotros');if(!about)return;const section=document.createElement('section');section.className='supporters section';section.setAttribute('aria-labelledby','supporters-title');section.innerHTML='<div class="supporters-head"><p class="eyebrow">Alianzas que respaldan la conversación</p><h2 id="supporters-title">Confían <em>en nosotros.</em></h2><p>Este proyecto se inspira en el trabajo regional de instituciones comprometidas con la salud y los derechos.</p></div><div class="institution-logos"><div class="institution-logo oras"><strong>ORAS</strong><span>CONHU</span></div><div class="institution-logo unfpa"><strong>UNFPA</strong><span>United Nations Population Fund</span></div><div class="institution-logo ops"><strong>OPS / OMS</strong><span>Organización Panamericana<br>y Mundial de la Salud</span></div><div class="institution-logo msp"><strong>MSP</strong><span>Ministerio de Salud Pública<br>del Ecuador</span></div></div>';about.before(section)});
+document.addEventListener('DOMContentLoaded',()=>{const grid=document.querySelector('#episodeGrid');if(!grid)return;const cards=()=>Array.from(grid.querySelectorAll('.episode-card'));let expanded=false;const more=document.createElement('div');more.className='episodes-more';more.innerHTML='<button class="button outline" id="toggleEpisodes" type="button" aria-expanded="false">Ver más episodios <span aria-hidden="true">↓</span></button>';grid.after(more);const button=more.querySelector('#toggleEpisodes');const applyLimit=()=>{cards().forEach((card,index)=>card.classList.toggle('collapsed',!expanded&&index>=4));more.hidden=expanded&&cards().length<=4};button.addEventListener('click',()=>{expanded=!expanded;applyLimit();button.setAttribute('aria-expanded',String(expanded));button.innerHTML=expanded?'Ver menos episodios <span aria-hidden="true">↑</span>':'Ver más episodios <span aria-hidden="true">↓</span>'});document.querySelectorAll('.filter').forEach(filter=>filter.addEventListener('click',()=>{if(filter.dataset.filter!=='todos'){expanded=true;button.hidden=true;cards().forEach(card=>card.classList.remove('collapsed'))}else{button.hidden=false;applyLimit()}}));setTimeout(applyLimit,0)});
+const episodes=[
+['15','No te quedes en shock: Cómo ser un buen aliado ante el abuso','Cómo ayudar sin juzgar, escuchar y activar rutas de ayuda.','relaciones','22:16','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP15--No-te-quedes-en-shock-Cmo-ser-un-buen-aliado-ante-el-abuso-e3nrleh'],
+['14','Rompiendo el silencio: Mutilación genital y violencia extrema contra el cuerpo','Una conversación sobre la inviolabilidad del cuerpo.','derechos','27:21','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP14--Rompiendo-el-silencio-Mutilacin-genital-y-violencia-extrema-contra-el-cuerpo-e3nrka7'],
+['13','Matrimonio infantil: Por qué casarse siendo niña/o no es un cuento de hadas','La realidad de las uniones tempranas y la dependencia.','derechos','26:51','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP13--Matrimonio-infantil-Por-qu-casarse-siendo-niao-NO-es-un-cuento-de-hadas-e3nrk5q'],
+['12','Maternidades que roban infancias: La cruda realidad del embarazo en menores','Embarazo en menores, violencia y apoyo confidencial.','emergencias','24:23','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP12--Maternidades-que-roban-infancias-La-cruda-realidad-del-embarazo-en-menores-e3nrjvs'],
+['11','Desmontando el género: ¿Ser hombre o mujer viene con etiqueta?','Sexo, género, estereotipos e igualdad.','derechos','27:27','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP11--Desmontando-el-gnero-Ser-hombre-o-mujer-viene-con-etiqueta-e3nor64'],
+['10','La ruta secreta de la denuncia: ¿Qué hacer si tú o una amiga están en peligro?','Señales de alerta y rutas reales de apoyo.','emergencias','33:17','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP10--La-ruta-secreta-de-la-denuncia-Qu-hacer-si-t-o-una-amiga-estn-en-peligro-e3nor2q'],
+['9','Violencia en redes: Ciberacoso y sexting seguro','Privacidad digital y difusión no consentida.','derechos','28:44','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP9--Violencia-en-redes-Ciberacoso-y-sexting-seguro-e3nor1m'],
+['8','Es que me cela porque me ama: Red flags que no debes normalizar','Banderas rojas y control digital.','relaciones','28:29','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP8--Es-que-me-cela-porque-me-ama-Red-Flags-que-NO-debes-normalizar-e3noqss'],
+['7','Rompiendo mitos de salud sexual: TikTok y la evidencia científica','Anticonceptivos, ITS y remedios caseros frente a la ciencia.','anticonceptivos','25:08','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP7--Rompiendo-mitos-de-salud-sexual-Entre-lo-que-dice-TikTok-y-la-evidencia-cientfica-e3noq55'],
+['6','La verdad sobre los anticonceptivos: Anticoncepción informada y sin mitos','Doble protección y métodos gratuitos y confidenciales.','anticonceptivos','28:58','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP6--La-verdad-sobre-los-anticonceptivos-Anticoncepcin-informada-y-sin-mitos-e3nopc9'],
+['5','Que tu proyecto de vida no sea el plan de alguien más','Decisiones propias y salud sexual reproductiva.','derechos','25:36','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP5--Que-tu-proyecto-de-vida-no-sea-el-plan-de-alguien-ms-e3nme5v'],
+['4','Preservativos sin filtro: Todo sobre las barreras y cómo usarlas bien','Uso correcto y protección contra ITS.','anticonceptivos','33:46','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP4--Preservativos-sin-filtro-Todo-sobre-las-barreras-y-cmo-usarlas-bien-e3nmdll'],
+['3','¿Responsabilidad afectiva o ghosting? Aprende a hablar claro sin lastimar','Comunicación honesta y límites sanos.','relaciones','30:15','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP3--Responsabilidad-afectiva-o-ghosting--Aprende-a-hablar-claro-sin-lastimar-e3nmclf'],
+['2','Menstruación en el colegio sin vergüenza','Ciclo menstrual y baños dignos como derecho.','derechos','33:34','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP2--Menstruacin-en-el-colegio-sin-vergenza-e3nm91f'],
+['1','Límites claros: Cómo decir NO sin morir en el intento','Consentimiento afirmativo y límites claros.','relaciones','27:25','https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP1--Lmites-claros-Cmo-decir-NO-sin-morir-en-el-intento-e3nm4pm']];
+const cover='https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/46555942/46555942-1786813565282-c656437a3f724.jpg';
+document.addEventListener('DOMContentLoaded',()=>{const grid=document.querySelector('#episodeGrid');if(grid){grid.innerHTML=episodes.map((e,i)=>`<article class="episode-card reveal visible" data-category="${e[3]}"><div class="episode-cover"><img src="${cover}" alt="Portada del episodio ${e[0]}" loading="lazy"><div class="cover-overlay"><span>CAP. ${e[0]} · ${e[4]}</span><strong>${e[1]}</strong></div></div><p class="tag">${e[3]}</p><h3>${e[1]}</h3><p>${e[2]}</p><button class="topic-toggle" type="button" aria-expanded="false">Ver temas del episodio <span>+</span></button><div class="topic-panel"><ul><li>Duración: ${e[4]}</li><li>Escuchar en la plataforma oficial</li></ul></div><a class="play-link" href="${e[5]}" target="_blank" rel="noopener">▶ Reproducir episodio</a></article>`).join('');document.querySelectorAll('.filter').forEach(f=>f.onclick=()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.toggle('active',x===f));document.querySelectorAll('.episode-card').forEach(c=>c.classList.toggle('is-hidden',f.dataset.filter!=='todos'&&c.dataset.category!==f.dataset.filter))});document.querySelectorAll('.topic-toggle').forEach(b=>b.onclick=()=>{const p=b.nextElementSibling,o=p.classList.toggle('open');b.setAttribute('aria-expanded',o);b.querySelector('span').textContent=o?'−':'+'})}const nav=document.querySelector('#mainNav'),toggle=document.querySelector('#navToggle');toggle?.addEventListener('click',()=>{const o=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',o)});nav?.querySelectorAll('a').forEach(a=>a.onclick=()=>{nav.classList.remove('open');toggle?.setAttribute('aria-expanded','false')});document.querySelectorAll('.myth').forEach(c=>c.onclick=()=>c.classList.toggle('flipped'));document.querySelector('#crisisClose')?.addEventListener('click',()=>document.querySelector('.crisis').remove());document.querySelector('#copyEmergency')?.addEventListener('click',async()=>{const s=document.querySelector('#copyStatus');try{await navigator.clipboard.writeText('SOS 72h: ve a un centro de salud. Atención gratuita y confidencial. Llama al 171 o 911.');s.textContent='Información copiada para compartir.'}catch{s.textContent='No fue posible copiar automáticamente.'}});const form=document.querySelector('#questionForm');form?.addEventListener('submit',e=>{e.preventDefault();form.reset();document.querySelector('#formStatus').textContent='Gracias. Tu pregunta fue recibida de forma anónima.'});const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>observer.observe(e));const p=document.querySelector('#progress');window.addEventListener('scroll',()=>{const d=document.documentElement.scrollHeight-innerHeight;p.style.width=(d?scrollY/d*100:0)+'%'},{passive:true})});
