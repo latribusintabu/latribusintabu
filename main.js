@@ -147,7 +147,7 @@
       grid.innerHTML = pageEpisodes.map((episode) => `
         <article class="episode-card" data-category="${episode[3]}">
           <div class="episode-cover">
-            <img src="${cover}" alt="Portada del episodio ${episode[0]}" loading="lazy">
+            <img src="${cover}" alt="Portada del episodio ${episode[0]}" loading="lazy" decoding="async">
             <div class="cover-overlay">
               <span>Cap. ${episode[0]} · ${episode[4]}</span>
               <strong>${episode[1]}</strong>
@@ -240,6 +240,20 @@
     });
   }
 
+  function initMediaEmbeds() {
+    document.querySelectorAll('.media-placeholder').forEach((button) => {
+      button.addEventListener('click', () => {
+        const iframe = document.createElement('iframe');
+        iframe.src = button.dataset.embedUrl;
+        iframe.title = button.dataset.embedTitle;
+        iframe.loading = 'lazy';
+        iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+        iframe.allowFullscreen = true;
+        button.replaceWith(iframe);
+      }, { once: true });
+    });
+  }
+
   function initEmergencyCopy() {
     const button = document.getElementById('copyEmergency');
     const status = document.getElementById('copyStatus');
@@ -264,10 +278,28 @@
     const status = document.getElementById('formStatus');
     if (!form) return;
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
-      if (status) status.textContent = 'Gracias. Tu pregunta se recibió de forma anónima y será revisada.';
-      form.reset();
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) submitButton.disabled = true;
+      if (status) status.textContent = 'Enviando tu pregunta...';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { Accept: 'application/json' }
+        });
+
+        if (!response.ok) throw new Error('Formspree submission failed');
+
+        if (status) status.textContent = 'Gracias. Tu pregunta se recibió y será revisada.';
+        form.reset();
+      } catch (error) {
+        if (status) status.textContent = 'No se pudo enviar. Inténtalo de nuevo en unos segundos.';
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
     });
   }
 
@@ -297,6 +329,7 @@
   function init() {
     initTheme();
     initEpisodeGrid();
+    initMediaEmbeds();
     initMythCards();
     initEmergencyCopy();
     initQuestionForm();

@@ -13,8 +13,8 @@
   --border: rgba(37, 35, 43, 0.12);
   --shadow: rgba(32, 24, 48, 0.10);
   --max: 1180px;
-  --display: 'Space Grotesk', 'Segoe UI', sans-serif;
-  --body: 'DM Sans', 'Segoe UI', sans-serif;
+  --display: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  --body: 'Segoe UI', Tahoma, sans-serif;
   --transition: 0.3s ease;
 }
 
@@ -89,25 +89,6 @@ footer,
 .hero {
   width: min(var(--max), calc(100% - 2rem));
   margin-inline: auto;
-}
-
-.site-header,
-.nav,
-.hero,
-.section-head,
-.actions,
-.filters,
-.resource-grid,
-.media-grid,
-.myth-grid,
-.about,
-.about-content,
-.social-icons,
-.footer-main,
-.sos-steps,
-.team-list,
-.footer-social {
-  transition: all var(--transition);
 }
 
 .progress {
@@ -322,7 +303,7 @@ html[data-theme="dark"] .site-header {
   border: 1px solid var(--border);
   border-radius: 999px;
   font-weight: 800;
-  transition: all var(--transition);
+  transition: transform var(--transition), background-color var(--transition), color var(--transition);
 }
 
 .button:hover {
@@ -352,6 +333,9 @@ html[data-theme="dark"] .site-header {
 
 .hero-logo {
   width: min(100%, 500px);
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
   border-radius: 32px;
   background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
   padding: 0.5rem;
@@ -360,6 +344,8 @@ html[data-theme="dark"] .site-header {
 
 .section {
   padding: 4.5rem 0;
+  content-visibility: auto;
+  contain-intrinsic-size: 600px;
 }
 
 .section-head {
@@ -429,6 +415,23 @@ html[data-theme="dark"] .site-header {
   border: 0;
 }
 
+.media-placeholder {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: radial-gradient(circle at 50% 35%, rgba(46, 212, 170, 0.26), transparent 42%), #15131d;
+  color: #FFFFFF;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.media-placeholder span {
+  display: block;
+  margin-top: 0.65rem;
+  color: var(--turquoise);
+  font-size: 1.5rem;
+}
+
 .media-link {
   display: inline-block;
   color: var(--violet);
@@ -450,7 +453,7 @@ html[data-theme="dark"] .site-header {
   border-radius: 999px;
   padding: 0.7rem 1rem;
   font-weight: 700;
-  transition: all var(--transition);
+  transition: transform var(--transition), background-color var(--transition), color var(--transition);
 }
 
 .filter:hover,
@@ -616,7 +619,7 @@ html[data-theme="dark"] .site-header {
   background: var(--surface);
   color: var(--text);
   font-weight: 700;
-  transition: all var(--transition);
+  transition: transform var(--transition), background-color var(--transition), color var(--transition);
 }
 
 .page-arrow {
