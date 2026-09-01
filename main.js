@@ -1,0 +1,312 @@
+(function () {
+  const STORAGE_KEY = 'theme';
+  const root = document.documentElement;
+
+  const episodes = [
+    ['15', 'No te quedes en shock: Cómo ser un buen aliado ante el abuso', 'Cómo ayudar sin juzgar, escuchar y activar rutas de ayuda.', 'relaciones', '22:16', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP15--No-te-quedes-en-shock-Cmo-ser-un-buen-aliado-ante-el-abuso-e3nrleh'],
+    ['14', 'Rompiendo el silencio: Mutilación genital y violencia extrema contra el cuerpo', 'Una conversación sobre la inviolabilidad del cuerpo.', 'derechos', '27:21', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP14--Rompiendo-el-silencio-Mutilacin-genital-y-violencia-extrema-contra-el-cuerpo-e3nrka7'],
+    ['13', 'Matrimonio infantil: Por qué casarse siendo niña/o no es un cuento de hadas', 'La realidad de las uniones tempranas y la dependencia.', 'derechos', '26:51', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP13--Matrimonio-infantil-Por-qu-casarse-siendo-niao-NO-es-un-cuento-de-hadas-e3nrk5q'],
+    ['12', 'Maternidades que roban infancias: La cruda realidad del embarazo en menores', 'Embarazo en menores, violencia y apoyo confidencial.', 'emergencias', '24:23', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP12--Maternidades-que-roban-infancias-La-cruda-realidad-del-embarazo-en-menores-e3nrjvs'],
+    ['11', 'Desmontando el género: ¿Ser hombre o mujer viene con etiqueta?', 'Sexo, género, estereotipos e igualdad.', 'derechos', '27:27', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP11--Desmontando-el-gnero-Ser-hombre-o-mujer-viene-con-etiqueta-e3nor64'],
+    ['10', 'La ruta secreta de la denuncia: ¿Qué hacer si tú o una amiga están en peligro?', 'Señales de alerta y rutas reales de apoyo.', 'emergencias', '33:17', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP10--La-ruta-secreta-de-la-denuncia-Qu-hacer-si-t-o-una-amiga-estn-en-peligro-e3nor2q'],
+    ['9', 'Violencia en redes: Ciberacoso y sexting seguro', 'Privacidad digital y difusión no consentida.', 'derechos', '28:44', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP9--Violencia-en-redes-Ciberacoso-y-sexting-seguro-e3nor1m'],
+    ['8', 'Es que me cela porque me ama: Red flags que no debes normalizar', 'Banderas rojas y control digital.', 'relaciones', '28:29', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP8--Es-que-me-cela-porque-me-ama-Red-Flags-que-NO-debes-normalizar-e3noqss'],
+    ['7', 'Rompiendo mitos de salud sexual: TikTok y la evidencia científica', 'Anticonceptivos, ITS y remedios caseros frente a la ciencia.', 'anticonceptivos', '25:08', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP7--Rompiendo-mitos-de-salud-sexual-Entre-lo-que-dice-TikTok-y-la-evidencia-cientfica-e3noq55'],
+    ['6', 'La verdad sobre los anticonceptivos: Anticoncepción informada y sin mitos', 'Doble protección y métodos gratuitos y confidenciales.', 'anticonceptivos', '28:58', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP6--La-verdad-sobre-los-anticonceptivos-Anticoncepcin-informada-y-sin-mitos-e3nopc9'],
+    ['5', 'Que tu proyecto de vida no sea el plan de alguien más', 'Decisiones propias y salud sexual reproductiva.', 'derechos', '25:36', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP5--Que-tu-proyecto-de-vida-no-sea-el-plan-de-alguien-ms-e3nme5v'],
+    ['4', 'Preservativos sin filtro: Todo sobre las barreras y cómo usarlas bien', 'Uso correcto y protección contra ITS.', 'anticonceptivos', '33:46', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP4--Preservativos-sin-filtro-Todo-sobre-las-barreras-y-cmo-usarlas-bien-e3nmdll'],
+    ['3', '¿Responsabilidad afectiva o ghosting? Aprende a hablar claro sin lastimar', 'Comunicación honesta y límites sanos.', 'relaciones', '30:15', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP3--Responsabilidad-afectiva-o-ghosting--Aprende-a-hablar-claro-sin-lastimar-e3nmclf'],
+    ['2', 'Menstruación en el colegio sin vergüenza', 'Ciclo menstrual y baños dignos como derecho.', 'derechos', '33:34', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP2--Menstruacin-en-el-colegio-sin-vergenza-e3nm91f'],
+    ['1', 'Límites claros: Cómo decir NO sin morir en el intento', 'Consentimiento afirmativo y límites claros.', 'relaciones', '27:25', 'https://podcasters.spotify.com/pod/show/latribusintabu/episodes/EP1--Lmites-claros-Cmo-decir-NO-sin-morir-en-el-intento-e3nm4pm']
+  ];
+
+  const cover = 'https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/46555942/46555942-1786813565282-c656437a3f724.jpg';
+
+  function readStoredTheme() {
+    try {
+      return localStorage.getItem(STORAGE_KEY);
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveTheme(theme) {
+    try {
+      localStorage.setItem(STORAGE_KEY, theme);
+    } catch (error) {
+      // Ignore storage restrictions.
+    }
+  }
+
+  function getPreferredTheme() {
+    const stored = readStoredTheme();
+    if (stored === 'light' || stored === 'dark') {
+      return stored;
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function syncThemeButton(theme) {
+    const toggle = document.getElementById('themeToggle');
+    if (!toggle) return;
+
+    const isDark = theme === 'dark';
+    const icon = toggle.querySelector('.theme-toggle__icon');
+    const srOnly = toggle.querySelector('.sr-only');
+
+    toggle.setAttribute('aria-pressed', String(isDark));
+    toggle.setAttribute('aria-label', isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+
+    if (icon) icon.textContent = isDark ? '☀️' : '🌙';
+    if (srOnly) srOnly.textContent = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+  }
+
+  function applyTheme(theme) {
+    const nextTheme = theme === 'dark' ? 'dark' : 'light';
+    root.setAttribute('data-theme', nextTheme);
+    syncThemeButton(nextTheme);
+  }
+
+  function toggleTheme() {
+    const current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    saveTheme(next);
+    applyTheme(next);
+  }
+
+  function initTheme() {
+    const preferredTheme = getPreferredTheme();
+    root.setAttribute('data-theme', preferredTheme);
+    saveTheme(preferredTheme);
+    syncThemeButton(preferredTheme);
+
+    const toggle = document.getElementById('themeToggle');
+    if (toggle) {
+      toggle.addEventListener('click', toggleTheme);
+    }
+
+    const navToggle = document.getElementById('navToggle');
+    const nav = document.getElementById('mainNav');
+    if (navToggle && nav) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      nav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          nav.classList.remove('is-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+    }
+  }
+
+  function getVisiblePageNumbers(totalPages, currentPage) {
+    if (totalPages <= 3) {
+      return Array.from({ length: totalPages }, (_, index) => index + 1);
+    }
+
+    if (currentPage <= 2) {
+      return [1, 2, 3];
+    }
+
+    if (currentPage >= totalPages - 1) {
+      return [totalPages - 2, totalPages - 1, totalPages];
+    }
+
+    return [currentPage - 1, currentPage, currentPage + 1];
+  }
+
+  function initEpisodeGrid() {
+    const grid = document.getElementById('episodeGrid');
+    if (!grid) return;
+
+    document.querySelectorAll('.episode-pagination').forEach((pagination) => pagination.remove());
+
+    const pagination = document.createElement('nav');
+    pagination.id = 'episodePagination';
+    pagination.className = 'episode-pagination';
+    pagination.setAttribute('aria-label', 'Paginación de episodios');
+    grid.parentNode.insertBefore(pagination, grid.nextSibling);
+
+    let activeFilter = 'todos';
+    let activePage = 1;
+
+    function renderEpisodes() {
+      const filteredEpisodes = activeFilter === 'todos'
+        ? episodes
+        : episodes.filter((episode) => episode[3] === activeFilter);
+
+      const totalPages = Math.max(1, Math.ceil(filteredEpisodes.length / 3));
+      activePage = Math.min(activePage, totalPages);
+
+      const startIndex = (activePage - 1) * 3;
+      const pageEpisodes = filteredEpisodes.slice(startIndex, startIndex + 3);
+
+      grid.innerHTML = pageEpisodes.map((episode) => `
+        <article class="episode-card" data-category="${episode[3]}">
+          <div class="episode-cover">
+            <img src="${cover}" alt="Portada del episodio ${episode[0]}" loading="lazy">
+            <div class="cover-overlay">
+              <span>Cap. ${episode[0]} · ${episode[4]}</span>
+              <strong>${episode[1]}</strong>
+            </div>
+          </div>
+          <p class="tag">${episode[3]}</p>
+          <h3>${episode[1]}</h3>
+          <p>${episode[2]}</p>
+          <button class="topic-toggle" type="button" aria-expanded="false">Más info del episodio <span>+</span></button>
+          <div class="topic-panel">
+            <p class="episode-description">${episode[2]}</p>
+            <ul>
+              <li>Duración: ${episode[4]}</li>
+              <li>Formato: Podcast</li>
+            </ul>
+          </div>
+          <a class="play-link" href="${episode[5]}" target="_blank" rel="noopener noreferrer">▶ Escuchar episodio</a>
+        </article>
+      `).join('');
+
+      const visiblePageNumbers = getVisiblePageNumbers(totalPages, activePage);
+      const firstVisiblePage = visiblePageNumbers[0];
+      const lastVisiblePage = visiblePageNumbers[visiblePageNumbers.length - 1];
+
+      const pageButtons = [];
+
+      if (firstVisiblePage > 1) {
+        pageButtons.push({ type: 'ellipsis', value: '…' });
+      }
+
+      visiblePageNumbers.forEach((pageNumber) => {
+        pageButtons.push({ type: 'page', value: pageNumber, active: pageNumber === activePage });
+      });
+
+      if (lastVisiblePage < totalPages) {
+        pageButtons.push({ type: 'ellipsis', value: '…' });
+      }
+
+      pagination.innerHTML = `
+        <button class="page-arrow" type="button" data-direction="prev" aria-label="Página anterior" ${activePage === 1 ? 'disabled' : ''}>←</button>
+        ${pageButtons.map((item) => item.type === 'ellipsis'
+          ? '<span class="page-ellipsis">…</span>'
+          : `<button class="page-number ${item.active ? 'active' : ''}" type="button" data-page="${item.value}" aria-current="${item.active ? 'page' : 'false'}">${item.value}</button>`
+        ).join('')}
+        <button class="page-arrow" type="button" data-direction="next" aria-label="Página siguiente" ${activePage === totalPages ? 'disabled' : ''}>→</button>
+      `;
+
+      pagination.querySelectorAll('.page-number').forEach((button) => {
+        button.addEventListener('click', () => {
+          activePage = Number(button.dataset.page);
+          renderEpisodes();
+        });
+      });
+
+      pagination.querySelectorAll('.page-arrow').forEach((button) => {
+        button.addEventListener('click', () => {
+          const direction = button.dataset.direction === 'next' ? 1 : -1;
+          activePage = Math.min(Math.max(activePage + direction, 1), totalPages);
+          renderEpisodes();
+        });
+      });
+
+      document.querySelectorAll('.topic-toggle').forEach((button) => {
+        button.addEventListener('click', () => {
+          const panel = button.nextElementSibling;
+          const isOpen = panel.classList.toggle('open');
+          button.setAttribute('aria-expanded', String(isOpen));
+          button.querySelector('span').textContent = isOpen ? '−' : '+';
+        });
+      });
+    }
+
+    document.querySelectorAll('.filter').forEach((filterButton) => {
+      filterButton.addEventListener('click', () => {
+        activeFilter = filterButton.dataset.filter;
+        activePage = 1;
+        document.querySelectorAll('.filter').forEach((btn) => btn.classList.toggle('active', btn === filterButton));
+        renderEpisodes();
+      });
+    });
+
+    renderEpisodes();
+  }
+
+  function initMythCards() {
+    document.querySelectorAll('.myth').forEach((card) => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('flipped');
+      });
+    });
+  }
+
+  function initEmergencyCopy() {
+    const button = document.getElementById('copyEmergency');
+    const status = document.getElementById('copyStatus');
+    if (!button) return;
+
+    button.addEventListener('click', async () => {
+      const emergencyText = 'La Tribu sin Tabú: si hay riesgo inmediato, busca ayuda médica o llama al 911. Si necesitas apoyo emocional o acompañamiento, llama al 171 y busca atención en un centro de salud de forma confidencial.';
+
+      try {
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(emergencyText);
+        }
+        if (status) status.textContent = 'Información copiada correctamente.';
+      } catch (error) {
+        if (status) status.textContent = 'No se pudo copiar automáticamente, pero la información está en la pantalla.';
+      }
+    });
+  }
+
+  function initQuestionForm() {
+    const form = document.getElementById('questionForm');
+    const status = document.getElementById('formStatus');
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (status) status.textContent = 'Gracias. Tu pregunta se recibió de forma anónima y será revisada.';
+      form.reset();
+    });
+  }
+
+  function initCrisisClose() {
+    const closeButton = document.getElementById('crisisClose');
+    const crisis = document.querySelector('.crisis');
+    if (closeButton && crisis) {
+      closeButton.addEventListener('click', () => crisis.remove());
+    }
+  }
+
+  function initProgressBar() {
+    const progress = document.getElementById('progress');
+    if (!progress) return;
+
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const width = maxScroll > 0 ? (scrollTop / maxScroll) * 100 : 0;
+      progress.style.width = `${Math.min(width, 100)}%`;
+    };
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  function init() {
+    initTheme();
+    initEpisodeGrid();
+    initMythCards();
+    initEmergencyCopy();
+    initQuestionForm();
+    initCrisisClose();
+    initProgressBar();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
